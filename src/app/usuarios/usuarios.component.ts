@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from './usuarios.service';
+import { Usuario } from './models/usuario';
 
 @Component({
   selector: 'app-usuarios',
@@ -7,7 +8,7 @@ import { UsuariosService } from './usuarios.service';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-  usuarios: any[] = [];
+  usuarios: Usuario[] = [];
   loading = true;
   error: string | null = null;
 
