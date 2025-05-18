@@ -19,7 +19,7 @@
         <span *ngIf="!isEnglish" class="label">Inicio</span>
       </button>
     </li>
-    <li>
+    <li *ngIf="!auth.usuarioActualValue">
       <button [routerLink]="'/iniciar-sesion'" routerLinkActive="active">
         <span class="icon">👤</span>
         <span *ngIf="isEnglish" class="label">Log in</span>
@@ -54,12 +54,29 @@
         <span *ngIf="!isEnglish" class="label">Mi Perfil</span>
       </button>
     </li>
-    <li>
-      <button [routerLink]="'/logout'" routerLinkActive="active">
+    <li *ngIf="auth.usuarioActualValue">
+      <button (click)="auth.logout()">
         <span class="icon">🚪</span>
         <span *ngIf="isEnglish" class="label">Log out</span>
         <span *ngIf="!isEnglish" class="label">Cerrar sesión</span>
       </button>
     </li>
   </ul>
+  <div *ngIf="auth.usuarioActualValue" class="sidebar-user-info">
+    <button nz-button nzType="text" nz-popover
+      [nzPopoverTitle]="'Datos de usuario'"
+      [nzPopoverContent]="userPopover"
+      style="width:100%;text-align:left">
+    </button>
+      <span style="font-weight:bold">{{ auth.usuarioActualValue.nombre || auth.usuarioActualValue.email }}</span>
+      <span style="font-size:12px; color: #888;">({{ auth.usuarioActualValue.rol.nombre }})</span>
+    <ng-template #userPopover>
+      <div style="min-width:180px">
+        <div><b>Nombre:</b> {{ auth.usuarioActualValue.nombre }}</div>
+        <div><b>Apellido:</b> {{ auth.usuarioActualValue.apellido }}</div>
+        <div><b>Email:</b> {{ auth.usuarioActualValue.email }}</div>
+        <div><b>Rol:</b> {{ auth.usuarioActualValue.rol.nombre }}</div>
+      </div>
+    </ng-template>
+  </div>
 </nav>

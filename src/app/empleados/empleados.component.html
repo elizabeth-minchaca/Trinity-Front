@@ -1,1 +1,24 @@
-<p>empleados works!</p>
+<div class="empleados-list">
+  <h2>Empleados</h2>
+  <nz-table #empleadosTable [nzData]="empleados" *ngIf="empleados.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empleado of empleados">
+        <td>{{ empleado?.nombre }}</td>
+        <td>{{ empleado?.apellido }}</td>
+        <td>{{ empleado?.email }}</td>
+        <td>{{ empleado?.rol?.nombre }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <div *ngIf="empleados.length === 0">
+    <nz-alert nzType="info" nzMessage="No hay empleados para mostrar."></nz-alert>
+  </div>
+</div>
