@@ -13,17 +13,15 @@ export class AuthService {
   // Su tipo es Usuario para exponer todos los datos completos del usuario autenticado.
   usuarioActual = signal<Usuario | null>(null);
 
-  // Devuelve el usuario actual (getter para plantillas)
-  get usuarioActualValue() {
-    return this.usuarioActual();
+  // Devuelve true si hay un usuario autenticado (getter para guards)
+  isLoggedIn(): boolean {
+    return !!this.usuarioActual();
   }
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {
-    //this.cargarUsuarioDesdeToken(); // Al iniciar, intenta cargar usuario si hay token
-  }
+  ) {}
 
   /**
    * Realiza login contra el backend, guarda el token y obtiene el usuario completo
@@ -103,3 +101,13 @@ export class AuthService {
     });
   }
 }
+
+/**
+ * USO RECOMENDADO EN COMPONENTES:
+ *
+ * import { computed } from '@angular/core';
+ * usuario = computed(() => this.auth.usuarioActual());
+ *
+ * En la plantilla:
+ * <ng-container *ngIf="usuario() as user"> ... </ng-container>
+ */

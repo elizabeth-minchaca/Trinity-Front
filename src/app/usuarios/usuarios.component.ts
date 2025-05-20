@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuariosService } from './usuarios.service';
 import { Usuario } from './models/usuario';
+import { UsuariosService } from './services/usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -20,7 +20,7 @@ export class UsuariosComponent implements OnInit {
         this.usuarios = usuarios;
         this.loading = false;
       },
-      error: err => {
+      error: (err: any) => {
         this.error = 'Error al cargar usuarios';
         this.loading = false;
       }

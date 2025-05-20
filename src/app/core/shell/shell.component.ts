@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
 /**
@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class ShellComponent implements OnInit {
   isEnglish: boolean = false;
+  // Signal computado que obtiene el usuario actual desde AuthService
+  usuario = computed(() => this.auth.usuarioActual());
   constructor(public auth: AuthService) {}
 
   ngOnInit(): void {

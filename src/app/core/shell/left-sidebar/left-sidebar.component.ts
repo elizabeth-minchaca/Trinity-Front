@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, computed } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -9,4 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class LeftSidebarComponent {
   @Input() isEnglish: boolean = false;
   constructor(public auth: AuthService) {}
+
+  // Signal computado que obtiene el usuario actual desde AuthService
+  usuario = computed(() => this.auth.usuarioActual);
 }

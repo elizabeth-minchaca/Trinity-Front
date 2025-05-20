@@ -1,0 +1,12 @@
+<div class="perfil-container">
+  <h2>Mi Perfil</h2>
+  <div *ngIf="usuario() as user">
+    <div class="perfil-row"><b>Nombre:</b> {{ user.nombre }}</div>
+    <div class="perfil-row"><b>Apellido:</b> {{ user.apellido }}</div>
+    <div class="perfil-row"><b>Email:</b> {{ user.correo }}</div>
+    <div class="perfil-row"><b>Rol:</b> {{ user.rol.nombre }}</div>
+  </div>
+  <div *ngIf="!usuario">
+    <p>No se pudo cargar la información del usuario.</p>
+  </div>
+</div>

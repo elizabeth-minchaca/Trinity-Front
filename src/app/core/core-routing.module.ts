@@ -38,6 +38,10 @@ const coreRoutes: Routes = [
     loadChildren: () => import('../empleados/empleados.module').then(m => m.EmpleadosModule)
   },
   {
+    path: 'usuarios',
+    loadChildren: () => import('../usuarios/usuarios.module').then(m => m.UsuariosModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
