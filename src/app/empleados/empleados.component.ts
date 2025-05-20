@@ -18,4 +18,10 @@ export class EmpleadosComponent implements OnInit {
       this.empleados = empleados;
     });
   }
+
+  // Función auxiliar para mostrar los roles como string
+  mostrarRoles(user: any): string {
+    if (!user || !user.roles) return '';
+    return user.roles.map((r: any) => r.nombre).join(', ');
+  }
 }

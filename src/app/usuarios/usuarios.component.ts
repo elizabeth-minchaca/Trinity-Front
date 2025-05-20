@@ -26,4 +26,10 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
+
+  getRolesString(usuario: Usuario): string {
+    return usuario.roles && usuario.roles.length > 0
+      ? usuario.roles.map(r => r.nombre).join(', ')
+      : '-';
+  }
 }

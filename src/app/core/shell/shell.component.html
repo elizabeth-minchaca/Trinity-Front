@@ -37,14 +37,14 @@
             class="header-user-btn">
             <img src="assets/anonimo.jpg" alt="Foto usuario" class="user-avatar" />
             <span class="user-name">{{ user.nombre || user.correo }}</span>
-            <span class="user-role">({{ user.rol.nombre }})</span>
+            <span class="user-role">({{ mostrarRoles(user) }})</span>
           </button>
           <ng-template #userPopoverHeader>
             <div class="user-popover-content">
               <div><b>Nombre:</b> {{ user.nombre }}</div>
               <div><b>Apellido:</b> {{ user.apellido }}</div>
               <div><b>Email:</b> {{ user.correo }}</div>
-              <div><b>Rol:</b> {{ user.rol.nombre }}</div>
+              <div><b>Roles:</b> {{ mostrarRoles(user)  }}</div>
 
               <button nz-button nzType="default" [routerLink]="'/usuarios/mi-perfil'" class="logout-btn" style="margin-bottom: 8px;">
                 <span nz-icon nzType="user" nzTheme="outline" class="logout-icon"></span>

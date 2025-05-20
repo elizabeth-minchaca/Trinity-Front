@@ -16,7 +16,12 @@
         <td>{{ usuario.id }}</td>
         <td>{{ usuario.nombre }}</td>
         <td>{{ usuario.correo }}</td>
-        <td>{{ usuario.rol }}</td>
+        <td>
+          <ng-container *ngIf="usuario.roles?.length; else sinRol">
+            {{ getRolesString(usuario) }}
+          </ng-container>
+          <ng-template #sinRol>-</ng-template>
+        </td>
       </tr>
     </tbody>
   </table>
