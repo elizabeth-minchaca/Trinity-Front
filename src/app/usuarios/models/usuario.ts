@@ -1,5 +1,6 @@
 import { Pais } from './pais';
 import { Rol } from './rol';
+import { Tarjeta } from './tarjeta';
 import { TipoIdentificacion } from './tipo-identificacion';
 
 export interface Usuario {
@@ -10,7 +11,8 @@ export interface Usuario {
   tipo_identificacion?: TipoIdentificacion;
   numero_identificacion?: string;
   apellido?: string;
-  fecha_nacimiento?: Date;
+  fecha_nacimiento?: string | Date;
   pais?: Pais;
   roles: Rol[];
+  tarjetas?: Tarjeta[];
 }
