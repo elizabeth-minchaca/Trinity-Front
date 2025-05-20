@@ -28,4 +28,16 @@ export class ShellComponent implements OnInit {
     if (!user || !user.roles) return '';
     return user.roles.map((r: any) => r.nombre).join(', ');
   }
+
+  // Función auxiliar para mostrar el primer rol del usuario
+  mostrarPrimerRol(user: any): string {
+    if (!user) return '';
+    if (user.roles && Array.isArray(user.roles) && user.roles.length > 0) {
+      return user.roles[0].nombre;
+    }
+    if (user.rol && user.rol.nombre) {
+      return user.rol.nombre;
+    }
+    return '';
+  }
 }

@@ -34,17 +34,22 @@
           <button nz-button nzType="text" nz-popover
             [nzPopoverTitle]="'Datos de usuario'"
             [nzPopoverContent]="userPopoverHeader"
-            class="header-user-btn">
-            <img src="assets/anonimo.jpg" alt="Foto usuario" class="user-avatar" />
-            <span class="user-name">{{ user.nombre || user.correo }}</span>
-            <span class="user-role">({{ mostrarRoles(user) }})</span>
+            class="header-user-btn"
+            [routerLink]="'/usuarios/mi-perfil'">
+            <div class="header-user-info">
+              <img src="assets/anonimo.jpg" alt="Foto usuario" class="user-avatar" />
+              <div class="header-user-info-text">
+                <span class="header-user-name">{{ user.nombre }} {{ user.apellido }}</span>
+                <span class="header-user-role">{{ mostrarPrimerRol(user) }}</span>
+              </div>
+            </div>
           </button>
           <ng-template #userPopoverHeader>
             <div class="user-popover-content">
               <div><b>Nombre:</b> {{ user.nombre }}</div>
               <div><b>Apellido:</b> {{ user.apellido }}</div>
               <div><b>Email:</b> {{ user.correo }}</div>
-              <div><b>Roles:</b> {{ mostrarRoles(user)  }}</div>
+              <div><b>Rol:</b> {{ mostrarRoles(user) }}</div>
 
               <button nz-button nzType="default" [routerLink]="'/usuarios/mi-perfil'" class="logout-btn" style="margin-bottom: 8px;">
                 <span nz-icon nzType="user" nzTheme="outline" class="logout-icon"></span>
