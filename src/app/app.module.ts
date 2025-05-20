@@ -13,6 +13,7 @@ import { JwtInterceptor } from './auth/jwt.interceptor';
 import { NzZorroModule } from './shared/nz-zorro.module';
 import { CoreRoutingModule } from './core/core-routing.module';
 import { EmpleadosComponent } from './empleados/empleados.component';
+import { DetalleReservaComponent } from './detalle-reserva/detalle-reserva.component';
 
 registerLocaleData(en);
 

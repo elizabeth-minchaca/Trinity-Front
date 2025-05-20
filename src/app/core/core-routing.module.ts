@@ -5,12 +5,20 @@ import { NgModule } from '@angular/core';
 
 const coreRoutes: Routes = [
   {
+    path: 'detalle-reserva',
+    loadChildren: () =>
+      import('../detalle-reserva/detalle-reserva.module').then(
+        (m) => m.DetalleReservaModule
+      ),
+  },
+  {
     path: 'detalle-propiedad',
     loadChildren: () =>
       import('../detalle-propiedad/detalle-propiedad.module').then(
         (m) => m.DetallePropiedadModule
       ),
   },
+
   {
     path: 'propiedades',
     loadChildren: () =>
@@ -21,9 +29,7 @@ const coreRoutes: Routes = [
   {
     path: 'reservas',
     loadChildren: () =>
-      import('../reservas/reservas.module').then(
-        (m) => m.ReservasModule
-      ),
+      import('../reservas/reservas.module').then((m) => m.ReservasModule),
   },
   {
     path: 'home',
@@ -57,7 +63,9 @@ const coreRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(coreRoutes)],
+  imports: [RouterModule.forRoot(coreRoutes, {
+            scrollPositionRestoration: 'top'
+        })],
   exports: [RouterModule],
 })
 export class CoreRoutingModule {}
