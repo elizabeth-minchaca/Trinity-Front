@@ -7,6 +7,10 @@
         <th>Apellido</th>
         <th>Email</th>
         <th>Rol</th>
+        <th>Tipo Identificación</th>
+        <th>Número Identificación</th>
+        <th>Fecha de Nacimiento</th>
+        <th>País</th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +19,10 @@
         <td>{{ empleado?.apellido }}</td>
         <td>{{ empleado?.correo }}</td>
         <td>{{ mostrarRoles(empleado) }}</td>
+        <td>{{ empleado?.tipo_identificacion?.nombre || '-' }}</td>
+        <td>{{ empleado?.numero_identificacion || '-' }}</td>
+        <td>{{ empleado?.fecha_nacimiento ? (empleado.fecha_nacimiento | date:'longDate') : '-' }}</td>
+        <td>{{ empleado?.pais?.nombre || '-' }}</td>
       </tr>
     </tbody>
   </nz-table>

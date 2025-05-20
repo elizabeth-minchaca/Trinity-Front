@@ -5,6 +5,10 @@
     <div class="perfil-row"><b>Apellido:</b> {{ user.apellido }}</div>
     <div class="perfil-row"><b>Email:</b> {{ user.correo }}</div>
     <div class="perfil-row"><b>Roles:</b> {{ mostrarRoles(user) }}</div>
+    <div class="perfil-row"><b>Tipo Identificación:</b> {{ user.tipo_identificacion?.nombre || '-' }}</div>
+    <div class="perfil-row"><b>Número Identificación:</b> {{ user.numero_identificacion || '-' }}</div>
+    <div class="perfil-row"><b>Fecha de Nacimiento:</b> {{ user.fecha_nacimiento ? (user.fecha_nacimiento | date:'longDate') : '-' }}</div>
+    <div class="perfil-row"><b>País:</b> {{ user.pais?.nombre || '-' }}</div>
   </div>
   <div *ngIf="!usuario">
     <p>No se pudo cargar la información del usuario.</p>

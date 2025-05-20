@@ -20,7 +20,13 @@ export class PerfilUsuarioComponent {
 
   // Función auxiliar para mostrar los roles como string
   mostrarRoles(user: any): string {
-    if (!user || !user.roles) return '';
-    return user.roles.map((r: any) => r.nombre).join(', ');
+    if (!user) return '';
+    if (user.roles && Array.isArray(user.roles)) {
+      return user.roles.map((r: any) => r.nombre).join(', ');
+    }
+    if (user.rol && user.rol.nombre) {
+      return user.rol.nombre;
+    }
+    return '';
   }
 }

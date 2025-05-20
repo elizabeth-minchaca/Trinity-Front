@@ -24,4 +24,11 @@ export class EmpleadosComponent implements OnInit {
     if (!user || !user.roles) return '';
     return user.roles.map((r: any) => r.nombre).join(', ');
   }
+
+  // Función auxiliar para mostrar el nombre del tipo de identificación
+  getTipoIdentificacionNombre(user: any): string {
+    if (!user || !user.tipo_identificacion) return '-';
+    if (typeof user.tipo_identificacion === 'string') return user.tipo_identificacion;
+    return user.tipo_identificacion.nombre || '-';
+  }
 }
