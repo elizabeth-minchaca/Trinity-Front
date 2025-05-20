@@ -26,7 +26,7 @@
         <span *ngIf="!isEnglish" class="label">Iniciar Sesión</span>
       </button>
     </li> -->
-    <li>
+    <li *ngIf="auth.usuarioActual()?.permisos?.gestionar_propiedades">
       <button [routerLink]="'/propiedades'" routerLinkActive="active">
         <span class="icon">🏘️</span>
         <span *ngIf="isEnglish" class="label">Properties</span>
@@ -40,7 +40,7 @@
         <span *ngIf="!isEnglish" class="label">Reservas</span>
       </button>
     </li>
-    <li>
+    <li *ngIf="auth.usuarioActual()?.permisos?.gestionar_empleados">
       <button [routerLink]="'/empleados'" routerLinkActive="active">
         <span class="icon">👥 </span>
         <span *ngIf="isEnglish" class="label">Employees</span>

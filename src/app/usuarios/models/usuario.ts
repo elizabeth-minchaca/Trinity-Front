@@ -2,6 +2,7 @@ import { Pais } from './pais';
 import { Rol } from './rol';
 import { Tarjeta } from './tarjeta';
 import { TipoIdentificacion } from './tipo-identificacion';
+import { PermisosUsuario } from './permisos-usuario';
 
 export interface Usuario {
   id: number;
@@ -15,4 +16,5 @@ export interface Usuario {
   pais?: Pais;
   roles: Rol[];
   tarjetas?: Tarjeta[];
+  permisos?: PermisosUsuario;
 }
