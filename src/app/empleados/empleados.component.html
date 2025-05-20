@@ -21,7 +21,7 @@
         <td>{{ mostrarRoles(empleado) }}</td>
         <td>{{ empleado?.tipo_identificacion?.nombre || '-' }}</td>
         <td>{{ empleado?.numero_identificacion || '-' }}</td>
-        <td>{{ empleado?.fecha_nacimiento ? (empleado.fecha_nacimiento | date:'longDate') : '-' }}</td>
+        <td>{{ empleado?.fecha_nacimiento ? (empleado.fecha_nacimiento | date:'dd/MM/yyyy') : '-' }}</td>
         <td>{{ empleado?.pais?.nombre || '-' }}</td>
       </tr>
     </tbody>
