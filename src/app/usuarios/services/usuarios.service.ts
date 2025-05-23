@@ -12,7 +12,7 @@ export class UsuariosService {
 
   // GET /usuarios
   getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.apiUrl);
+    return this.http.get<Usuario[]>(`${this.apiUrl}/`);
   }
 
   // POST /usuarios

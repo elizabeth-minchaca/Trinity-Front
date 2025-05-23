@@ -26,3 +26,28 @@ th {
   background: #2C3E50;
   color: #FFF4E6;
 }
+.boton-crear-usuario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  float: right;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, #2C3E50 60%, #1890ff 100%);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0001;
+  border: none;
+  transition: background 0.2s;
+}
+.boton-crear-usuario:hover {
+  background: linear-gradient(90deg, #1890ff 60%, #2C3E50 100%);
+  color: #fff;
+}
+
+.usuarios-container::after {
+  content: "";
+  display: table;
+  clear: both;
+}

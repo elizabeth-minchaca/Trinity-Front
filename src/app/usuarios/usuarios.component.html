@@ -1,5 +1,13 @@
 <div class="usuarios-container">
   <h2>Usuarios</h2>
+  <button nz-button nzType="primary" (click)="mostrarModalCrearUsuario = true" class="boton-crear-usuario">
+    <span nz-icon nzType="user-add"></span> Crear usuario
+  </button>
+  <nz-modal [(nzVisible)]="mostrarModalCrearUsuario" nzTitle="Registrar usuario" (nzOnCancel)="mostrarModalCrearUsuario = false" [nzFooter]="null" [nzWidth]="700">
+    <ng-container *nzModalContent>
+      <app-registrar-usuario></app-registrar-usuario>
+    </ng-container>
+  </nz-modal>
   <div *ngIf="loading">Cargando...</div>
   <div *ngIf="error">{{ error }}</div>
   <table *ngIf="!loading && !error">

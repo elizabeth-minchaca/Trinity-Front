@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -13,17 +14,24 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Verifica si la URL debe ser ignorada
     const shouldIgnore = this.ignoredUrls.some(url => req.url.includes(url));
     const token = this.authService.getToken();
+    let request = req;
     if (token && !shouldIgnore) {
-      const cloned = req.clone({
+      request = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
-      return next.handle(cloned);
     }
-    return next.handle(req);
+    return next.handle(request).pipe(
+      catchError((error: any) => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          // Si el error es 401, cerrar sesión y redirigir al login
+          this.authService.logout();
+        }
+        return throwError(() => error);
+      })
+    );
   }
 }

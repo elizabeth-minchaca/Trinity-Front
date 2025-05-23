@@ -1,0 +1,153 @@
+<form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-usuario">
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="nombre" nzRequired>Nombre</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="nombre" id="nombre" placeholder="Nombre" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="apellido" nzRequired>Apellido</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="apellido" id="apellido" placeholder="Apellido" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="correo" nzRequired>Email</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="correo" id="correo" placeholder="Correo electrónico" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="password_hash" nzRequired>Contraseña</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input type="password" formControlName="password_hash" id="password_hash" placeholder="Contraseña" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="tipo_identificacion" nzRequired>Tipo Identificación</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <nz-select formControlName="tipo_identificacion" id="tipo_identificacion" nzPlaceHolder="Seleccione tipo">
+            <!-- Opciones dinámicas -->
+            <nz-option nzValue="DNI" nzLabel="DNI"></nz-option>
+            <nz-option nzValue="Pasaporte" nzLabel="Pasaporte"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="numero_identificacion" nzRequired>Número Identificación</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="numero_identificacion" id="numero_identificacion" placeholder="Número de identificación" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="fecha_nacimiento" nzRequired>Fecha de Nacimiento</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input type="date" formControlName="fecha_nacimiento" id="fecha_nacimiento" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="pais" nzRequired>País</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <nz-select formControlName="pais" id="pais" nzPlaceHolder="Seleccione país">
+            <!-- Opciones dinámicas -->
+            <nz-option nzValue="Argentina" nzLabel="Argentina"></nz-option>
+            <nz-option nzValue="Uruguay" nzLabel="Uruguay"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzSpan="24">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="roles" nzRequired>Roles</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <nz-select formControlName="roles" id="roles" nzMode="multiple" nzPlaceHolder="Seleccione roles">
+            <!-- Opciones dinámicas -->
+            <nz-option nzValue="ADMIN" nzLabel="Administrador"></nz-option>
+            <nz-option nzValue="USER" nzLabel="Usuario"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzSpan="24" *ngFor="let tarjeta of tarjetas.controls; let i = index" [formGroupName]="i">
+      <nz-card class="card-hover-border" [ngClass]="{'card-hover': tarjetaHoverIndex === i}" style="position: relative; margin-bottom: 16px; width: 100%; box-sizing: border-box;">
+        <button nz-button nzType="text" (mouseenter)="tarjetaHoverIndex = i" (mouseleave)="tarjetaHoverIndex = null" (click)="eliminarTarjeta(i)" class="cerrar-tarjeta-btn" style="position: absolute; top: 8px; right: 8px; z-index: 2;">
+          <span nz-icon nzType="close"></span>
+        </button>
+        <div nz-row [nzGutter]="8">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Marca</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select formControlName="marca" nzPlaceHolder="Marca">
+                  <nz-option nzValue="Visa" nzLabel="Visa"></nz-option>
+                  <nz-option nzValue="Mastercard" nzLabel="Mastercard"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Tipo</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select formControlName="tipo" nzPlaceHolder="Tipo">
+                  <nz-option nzValue="Crédito" nzLabel="Crédito"></nz-option>
+                  <nz-option nzValue="Débito" nzLabel="Débito"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="8">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Número</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input nz-input formControlName="numero" placeholder="Número" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Fecha Vencimiento</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input nz-input type="date" formControlName="fecha_vencimiento" placeholder="Fecha Vencimiento" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  <div style="margin-top: 12px;">
+    <button nz-button nzType="dashed" (click)="agregarTarjeta()" type="button" style="width: 100%;">Agregar Tarjeta</button>
+  </div>
+  <div style="text-align: right; margin-top: 24px;">
+    <button nz-button nzType="primary" [disabled]="form.invalid">Registrar Usuario</button>
+  </div>
+</form>

@@ -11,6 +11,7 @@ export class UsuariosComponent implements OnInit {
   usuarios: Usuario[] = [];
   loading = true;
   error: string | null = null;
+  mostrarModalCrearUsuario = false;
 
   constructor(private usuariosService: UsuariosService) {}
 

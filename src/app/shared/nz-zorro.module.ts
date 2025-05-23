@@ -13,6 +13,7 @@ import { NzModalModule } from "ng-zorro-antd/modal";
 import { NzAutocompleteModule } from "ng-zorro-antd/auto-complete";
 import { NzAlertModule } from "ng-zorro-antd/alert";
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzCardModule } from "ng-zorro-antd/card";
 
 @NgModule({
   declarations: [],
@@ -30,7 +31,8 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     NzModalModule,
     NzAutocompleteModule,
     NzAlertModule,
-    NzPopoverModule
+    NzPopoverModule,
+    NzCardModule
   ],
   exports: [
     NzIconModule,
@@ -46,7 +48,8 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     NzModalModule,
     NzAutocompleteModule,
     NzAlertModule,
-    NzPopoverModule
+    NzPopoverModule,
+    NzCardModule
   ]
 })
 export class NzZorroModule {}
