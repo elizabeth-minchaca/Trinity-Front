@@ -13,7 +13,10 @@ import { NzModalModule } from "ng-zorro-antd/modal";
 import { NzAutocompleteModule } from "ng-zorro-antd/auto-complete";
 import { NzAlertModule } from "ng-zorro-antd/alert";
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
-import { NzCardModule } from "ng-zorro-antd/card";
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzSpinModule } from "ng-zorro-antd/spin";
+import { NzPaginationModule } from "ng-zorro-antd/pagination";
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 @NgModule({
   declarations: [],
@@ -32,7 +35,10 @@ import { NzCardModule } from "ng-zorro-antd/card";
     NzAutocompleteModule,
     NzAlertModule,
     NzPopoverModule,
-    NzCardModule
+    NzSwitchModule,
+    NzSpinModule,
+    NzPaginationModule,
+    NzDividerModule
   ],
   exports: [
     NzIconModule,
@@ -49,7 +55,10 @@ import { NzCardModule } from "ng-zorro-antd/card";
     NzAutocompleteModule,
     NzAlertModule,
     NzPopoverModule,
-    NzCardModule
+    NzSwitchModule,
+    NzSpinModule,
+    NzPaginationModule,
+    NzDividerModule
   ]
 })
 export class NzZorroModule {}
