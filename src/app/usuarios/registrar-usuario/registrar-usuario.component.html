@@ -267,13 +267,20 @@
               </nz-form-item>
             </div>
           </div>
-          <div nz-row [nzGutter]="8">
+          <!-- <div nz-row [nzGutter]="8">
             <div nz-col nzSpan="12">
               <nz-form-item>
                 <nz-form-label [nzSpan]="24">Anverso</nz-form-label>
                 <nz-form-control [nzSpan]="24">
-                  <input type="file" accept="image/*" (change)="onFileChange($event, i, 'anverso_url')" />
-                  <img *ngIf="getFormControlValue(tarjeta, 'anverso_url')" [src]="getFormControlValue(tarjeta, 'anverso_url')" alt="Anverso" style="max-width: 100px; display: block; margin-top: 6px;" />
+                  <input type="file"
+                    accept="image/*"
+                    (change)="onFileChange($event, i, 'anverso_url')"
+                  />
+                  <img *ngIf="getFormControlValue(tarjeta, 'anverso_url')"
+                    [src]="getFormControlValue(tarjeta, 'anverso_url')"
+                    alt="Anverso"
+                    style="max-width: 100px; display: block; margin-top: 6px;"
+                  />
                 </nz-form-control>
               </nz-form-item>
             </div>
@@ -281,12 +288,18 @@
               <nz-form-item>
                 <nz-form-label [nzSpan]="24">Reverso</nz-form-label>
                 <nz-form-control [nzSpan]="24">
-                  <input type="file" accept="image/*" (change)="onFileChange($event, i, 'reverso_url')" />
-                  <img *ngIf="getFormControlValue(tarjeta, 'reverso_url')" [src]="getFormControlValue(tarjeta, 'reverso_url')" alt="Reverso" style="max-width: 100px; display: block; margin-top: 6px;" />
+                  <input type="file" accept="image/*"
+                    (change)="onFileChange($event, i, 'reverso_url')"
+                  />
+                  <img *ngIf="getFormControlValue(tarjeta, 'reverso_url')"
+                    [src]="getFormControlValue(tarjeta, 'reverso_url')"
+                    alt="Reverso"
+                    style="max-width: 100px; display: block; margin-top: 6px;"
+                  />
                 </nz-form-control>
               </nz-form-item>
             </div>
-          </div>
+          </div> -->
         </nz-card>
       </div>
     </div>
