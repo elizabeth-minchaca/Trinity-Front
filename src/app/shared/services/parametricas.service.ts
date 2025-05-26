@@ -69,4 +69,6 @@ export class ParametricasService {
   get_tipos_tarjeta(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/tipos-tarjeta`);
   }
+
+
 }
