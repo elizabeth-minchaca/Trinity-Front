@@ -1,5 +1,15 @@
 <div class="reserva-header">
   <h2 class="titulo-general">Detalle de la Propiedad</h2>
+  <!-- <span
+    [ngClass]="
+      propiedad.delete_at != null ? 'badge-cancelada' : 'badge-confirmada'
+    "
+  >
+    {{ propiedad.delete_at != null ? "Eliminada" : "Activa" }}
+  </span> -->
+  <span *ngIf="propiedad.delete_at != null" class="badge-eliminada">
+    Eliminada
+  </span>
 </div>
 
 <ng-container>
@@ -221,7 +231,6 @@
   </div>
 </ng-container>
 
-
 <nz-modal
   [(nzVisible)]="isModalVisible"
   [nzTitle]="modalTitle"
@@ -230,11 +239,11 @@
 >
   <div *nzModalContent>
     <!-- Empleado -->
-      <div class="row" *ngIf="!codigo">
-          <form nz-form [formGroup]="formEmpleado" nzLayout="vertical">
+    <div class="row" *ngIf="!codigo">
+      <form nz-form [formGroup]="formEmpleado" nzLayout="vertical">
         <div class="col-md-6">
           <nz-form-item>
-            <nz-form-label nzFor="id_encargado">Encargado</nz-form-label>
+            <nz-form-label nzRequired nzFor="id_encargado">Encargado</nz-form-label>
 
             <nz-select
               nzPlaceHolder="Seleccionar Encargado"
@@ -251,15 +260,14 @@
           </nz-form-item>
 
         </div>
-        </form>
-      </div>
+      </form>
+    </div>
 
-      <div class="row" *ngIf="codigo">
-        <form nz-form [formGroup]="formCodigo" nzLayout="vertical">
-
+    <div class="row" *ngIf="codigo">
+      <form nz-form [formGroup]="formCodigo" nzLayout="vertical">
         <div class="col-md-3">
           <nz-form-item>
-            <nz-form-label nzFor="codigoAcceso">Código de Acceso</nz-form-label>
+            <nz-form-label nzRequired nzFor="codigoAcceso">Código de Acceso</nz-form-label>
             <nz-form-control [nzErrorTip]="codigoAccesoErrorTpl">
               <input
                 nz-input
@@ -275,8 +283,8 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        </form>
-      </div>
+      </form>
+    </div>
   </div>
 
   <div *nzModalFooter>
@@ -288,7 +296,8 @@
       class="btn-aceptar"
       nz-button
       (click)="onSubmitForm()"
-    > Aceptar
+    >
+      Aceptar
     </button>
   </div>
 </nz-modal>
