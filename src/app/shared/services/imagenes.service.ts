@@ -27,7 +27,10 @@ export class ImagenesService {
   }
 
   // Obtener imagen por id
-  getImagenPorId(imagen_id: number): Observable<Blob> {
+  /* getImagenPorId(imagen_id: number): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/id/${imagen_id}`, { responseType: 'blob' });
+  } */
+  getImagenPorId(id: number): Observable<any> {
+    return this.http.get(<any>`${this.apiUrl}/id/${id}`);
   }
 }
