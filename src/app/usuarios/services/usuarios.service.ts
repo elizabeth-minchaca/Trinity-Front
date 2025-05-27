@@ -12,12 +12,12 @@ export class UsuariosService {
 
   // GET /usuarios
   getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.apiUrl);
+    return this.http.get<Usuario[]>(`${this.apiUrl}/`);
   }
 
-  // POST /usuarios
-  crearUsuario(usuario: Usuario): Observable<any> {
-    return this.http.post(this.apiUrl, usuario);
+  // POST /usuarios (acepta objeto plano para registro)
+  crearUsuario(usuario: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/`, usuario);
   }
 
   getUsuarioPorId(id: number): Observable<Usuario> {

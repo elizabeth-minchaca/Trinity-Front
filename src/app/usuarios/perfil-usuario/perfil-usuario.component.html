@@ -20,7 +20,7 @@
       <b>Tarjetas:</b>
       <ul>
         <li *ngFor="let tarjeta of user.tarjetas">
-          {{ tarjeta?.marca?.nombre }} - {{ tarjeta?.tipo?.nombre }} - {{ tarjeta?.numero }} - Fecha Vto. {{ tarjeta?.fecha_vencimiento ? (tarjeta.fecha_vencimiento | date:'dd/MM/yyyy') : '-' }}
+          {{ tarjeta?.marca?.nombre }} - {{ tarjeta?.tipo?.nombre }} - {{ tarjeta?.numero }} - Fecha Inicio. {{ tarjeta?.fecha_inicio ?? '-' }} - Fecha Vto. {{ tarjeta?.fecha_vencimiento ?? '-' }}
         </li>
       </ul>
     </div>
