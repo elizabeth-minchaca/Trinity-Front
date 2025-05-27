@@ -34,13 +34,15 @@
         <span style="color: #b0b0b0; margin-left: 12px;">No cargada. Puede cargarla abajo.</span>
       </ng-template>
     </div>
-    <form [formGroup]="form" (ngSubmit)="onSubmitFotos()" class="form-fotos" style="margin-bottom: 32px;">
-      <div class="perfil-row">
-        <label><b>Actualizar foto de perfil:</b></label>
-        <input type="file" accept="image/*" (change)="onFileChange($event, 'foto_perfil')" />
-      </div>
-      <button nz-button nzType="primary" [disabled]="form.get('foto_perfil')?.invalid">Subir foto de perfil</button>
-    </form>
+    <div class="perfil-row">
+      <label style="margin-bottom: 0;">
+        <input #fotoPerfilInput type="file" accept="image/*" style="display:none" (change)="onFileChange($event); onSubmitFotos()" [disabled]="subiendoDoc" />
+        <button nz-button nzType="primary" type="button" (click)="fotoPerfilInput.click()" [disabled]="subiendoDoc">
+          <ng-container *ngIf="!subiendoDoc">Actualizar foto de perfil</ng-container>
+          <ng-container *ngIf="subiendoDoc">Guardando...</ng-container>
+        </button>
+      </label>
+    </div>
     <hr>
     <div class="perfil-row" style="flex-direction: column; align-items: flex-start;">
       <b style="margin-bottom: 8px; display: block;">Documentos adjuntos:</b>
