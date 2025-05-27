@@ -1,22 +1,20 @@
 <div class="usuarios-container">
   <h2>Usuarios</h2>
-  <button nz-button nzType="primary" (click)="mostrarModalCrearUsuario = true" class="boton-crear-usuario">
+  <button nz-button nzType="primary" (click)="abrirModalRegistroUsuario()" class="boton-crear-usuario">
     <span nz-icon nzType="user-add"></span> Crear usuario
   </button>
-  <nz-modal [(nzVisible)]="mostrarModalCrearUsuario" nzTitle="Registrar usuario" (nzOnCancel)="mostrarModalCrearUsuario = false" [nzFooter]="null" [nzWidth]="700">
-    <ng-container *nzModalContent>
-      <app-registrar-usuario></app-registrar-usuario>
-    </ng-container>
-  </nz-modal>
+
   <div *ngIf="loading">Cargando...</div>
   <div *ngIf="error">{{ error }}</div>
-  <table *ngIf="!loading && !error">
+  <table *ngIf="!loading && !error" class="tabla-usuarios">
     <thead>
       <tr>
         <th>ID</th>
         <th>Nombre</th>
         <th>Correo</th>
         <th>Rol</th>
+        <th>Tipo Identificación</th>
+        <th>Número Identificación</th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +28,8 @@
           </ng-container>
           <ng-template #sinRol>-</ng-template>
         </td>
+        <td>{{ usuario.tipo_identificacion?.nombre || '-' }}</td>
+        <td>{{ usuario.numero_identificacion || '-' }}</td>
       </tr>
     </tbody>
   </table>

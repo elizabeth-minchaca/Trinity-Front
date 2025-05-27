@@ -7,6 +7,13 @@ import { Rol } from '../models/rol';
 import { TipoIdentificacion } from '../models/tipo-identificacion';
 import { MarcaTarjeta } from '../models/marca-tarjeta';
 import { TipoTarjeta } from '../models/tipo-tarjeta';
+import { UsuariosService } from '../services/usuarios.service';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { finalize } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { RolEnum } from '../enums/rol.enum';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registrar-usuario',
@@ -21,8 +28,17 @@ export class RegistrarUsuarioComponent implements OnInit {
   tiposIdentificacion: TipoIdentificacion[] = [];
   marcasTarjeta: MarcaTarjeta[] = [];
   tiposTarjeta: TipoTarjeta[] = [];
+  creandoUsuario = false; // Nueva propiedad
+  tieneSesion = false;
 
-  constructor(private fb: FormBuilder, private parametricasService: ParametricasService) {
+  constructor(
+    private fb: FormBuilder,
+    private parametricasService: ParametricasService,
+    private usuariosService: UsuariosService,
+    private modalRef: NzModalRef<RegistrarUsuarioComponent>, // Inyecta NzModalRef
+    private auth: AuthService,
+    private message: NzMessageService // Inyecta NzMessageService
+  ) {
   }
 
   ngOnInit(): void {
@@ -32,6 +48,9 @@ export class RegistrarUsuarioComponent implements OnInit {
     this._loadMarcasTarjeta();
     this._loadTiposTarjeta();
     this._initForm();
+
+    this.tieneSesion = !!this.auth.usuarioActual();
+    // El seteo por defecto del rol ahora se hace en _loadRoles usando RolEnum
   }
 
   private _initForm() {
@@ -53,14 +72,12 @@ export class RegistrarUsuarioComponent implements OnInit {
     return this.fb.group({
       marca: [null, Validators.required],
       tipo: [1, Validators.required],
-      numero: ['', Validators.required],
-      nombre_titular: ['', Validators.required],
+      numero: [null, Validators.required],
+      nombre_titular: [null, Validators.required],
       fecha_inicio: [null],
       fecha_vencimiento: [null, Validators.required],
-      cvv: ['', Validators.required],
+      cvv: [null, Validators.required],
       usuario_id: [null],
-      anverso_url: [null],
-      reverso_url: [null]
     })
   }
 
@@ -78,14 +95,12 @@ export class RegistrarUsuarioComponent implements OnInit {
       this.tarjetas.at(0).reset({
         marca: null,
         tipo: 1,
-        numero: '',
-        nombre_titular: '',
+        numero: null,
+        nombre_titular: null,
         fecha_inicio: null,
         fecha_vencimiento: null,
-        cvv: '',
-        usuario_id: null,
-        anverso_url: null,
-        reverso_url: null
+        cvv: null,
+        usuario_id: null
       });
     } else {
       this.tarjetas.removeAt(index);
@@ -97,7 +112,31 @@ export class RegistrarUsuarioComponent implements OnInit {
   }
 
   private _loadRoles(): void {
-    this.parametricasService.get_roles().subscribe(data => this.roles = data);
+    this.parametricasService.get_roles().subscribe(data => {
+      const usuario = this.auth.usuarioActual();
+      if (usuario) {
+        const idsRoles = usuario.roles?.map((r: any) => r.id) || [];
+        if (idsRoles.includes(RolEnum.Encargado)) {
+          // Si es Encargado, solo puede ver el rol Inquilino
+          this.roles = data.filter((rol: any) => rol.id === RolEnum.Inquilino);
+          // Setea por defecto el rol Inquilino usando el enum
+          if (this.roles.length > 0) {
+            this.form.get('roles')?.setValue([RolEnum.Inquilino]);
+            this.form.get('roles')?.disable();
+          }
+        } else {
+          // Si es Administrador u otro, muestra todos los roles
+          this.roles = data;
+        }
+      } else {
+        // Si no hay sesión, muestra solo Inquilino (ya está forzado en el form)
+        this.roles = data.filter((rol: any) => rol.id === RolEnum.Inquilino);
+        if (this.roles.length > 0) {
+          this.form.get('roles')?.setValue([RolEnum.Inquilino]);
+          this.form.get('roles')?.disable();
+        }
+      }
+    });
   }
 
   private _loadTiposIdentificacion(): void {
@@ -170,22 +209,85 @@ private validateFecha(value: string, index: number, controlName: string) {
   }
 
   onSubmit() {
-    console.log(this.form.value);
-
     if (this.form.valid) {
+      this.creandoUsuario = true;
+      // Usar getRawValue para incluir campos deshabilitados
+      const formValue = this.form.getRawValue();
 
-      // Formatear fecha_vencimiento de cada tarjeta a mm/yyyy
-      /* this.tarjetas.controls.forEach(tarjeta => {
-        const raw = tarjeta.get('fecha_vencimiento')?.value;
-        if (raw && typeof raw === 'string' && raw.match(/^\d{4}-\d{2}$/)) {
-          // raw es "yyyy-mm", convertir a "mm/yyyy"
-          const [year, month] = raw.split('-');
-          tarjeta.get('fecha_vencimiento')?.setValue(`${month}/${year}`);
+      console.log(formValue);
+
+    // Permite roles como [{id: 3}] o [3]
+    const roles_ids = Array.isArray(formValue.roles)
+      ? formValue.roles.map((r: any) => typeof r === 'object' && r !== null ? r.id : r).filter((id: any) => id !== undefined && id !== null)
+      : [];
+
+    const id_tipo_identificacion = formValue.tipo_identificacion;
+    const id_pais = formValue.pais;
+
+    // Validaciones extra
+    if (!roles_ids.length) {
+      alert('Debe seleccionar al menos un rol.');
+      return;
+    }
+    if (!id_tipo_identificacion) {
+      alert('Debe seleccionar un tipo de identificación.');
+      return;
+    }
+    if (!id_pais) {
+      alert('Debe seleccionar un país.');
+      return;
+    }
+
+    // Mapear tarjetas al formato requerido
+    const tarjetas = (formValue.tarjetas || []).map((t: any) => ({
+      numero: t.numero,
+      nombre_titular: t.nombre_titular,
+      fecha_inicio: t.fecha_inicio,
+      fecha_vencimiento: t.fecha_vencimiento,
+      cvv: t.cvv,
+      id_marca: t.marca?.id ?? t.marca, // Soporta objeto o id
+      id_tipo: t.tipo?.id ?? t.tipo      // Soporta objeto o id
+    }));
+
+    const usuario = {
+      nombre: formValue.nombre,
+      apellido: formValue.apellido,
+      correo: formValue.correo,
+      password: formValue.password_hash,
+      roles_ids,
+      id_tipo_identificacion,
+      numero_identificacion: formValue.numero_identificacion,
+      fecha_nacimiento: formValue.fecha_nacimiento,
+      id_pais,
+      tarjetas
+    };
+
+    console.log(usuario);
+    this.usuariosService.crearUsuario(usuario)
+      .pipe(
+        finalize(() => {
+          this.creandoUsuario = false; // Asegura que se desactive al finalizar
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          console.log('Usuario creado exitosamente:', response);
+          this.modalRef.close(response); // Retorna el usuario creado al llamador
+        },
+        error: (error) => {
+          // SweetAlert2: mostrar mensaje de error 400 del backend
+          if (error.status === 400 && error.error) {
+            const msg = error.error.message || error.error.error || error.statusText || 'Error desconocido';
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: msg
+            });
+          } else {
+            console.error('Error al crear el usuario:', error);
+          }
         }
-      }); */
-      const usuario: Usuario = this.form.value;
-      // Aquí puedes enviar el usuario al backend
-      console.log(usuario);
+      });
     } else {
       this.form.markAllAsTouched();
     }
