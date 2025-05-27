@@ -98,6 +98,8 @@ export class AuthService {
   private cargarUsuarioPorId(userId: number) {
     this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${userId}`).subscribe((usuario: Usuario) => {
       this.usuarioActual.set(usuario);
+      console.log(usuario);
+
     });
   }
 
@@ -140,6 +142,16 @@ export class AuthService {
    */
   setToken(token: string) {
     localStorage.setItem('jwt_token', token);
+  }
+
+  /**
+   * Fuerza la recarga del usuario actual desde la API usando su id.
+   */
+  refrescarUsuarioActual() {
+    const usuario = this.usuarioActual();
+    if (usuario && usuario.id) {
+      this.cargarUsuarioPorId(usuario.id);
+    }
   }
 }
 

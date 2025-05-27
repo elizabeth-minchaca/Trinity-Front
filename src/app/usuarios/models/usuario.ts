@@ -18,7 +18,7 @@ export class Usuario {
   tarjetas?: Tarjeta[];
   id_imagen?: number;
   imagen: string;
-  imagenes_doc: Array<any>;
+  imagenes_doc: Array<{id: number}>;
   permisos?: PermisosUsuario;
 
   constructor(obj?: any) {

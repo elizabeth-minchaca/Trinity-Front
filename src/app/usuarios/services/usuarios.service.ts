@@ -40,4 +40,22 @@ export class UsuariosService {
     return this.http.get<Usuario[]>(`${this.apiUrl}/por-rol/${rolId}`);
   }
 
+
+
+  subirImagenDocumento(formData: FormData, idUsuario: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/imagenDocumento?id_usuario=${idUsuario}`, formData);
+  }
+
+  subirImagenDocAdicional(formData: FormData, idUsuario: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/imagenDoc?id_usuario=${idUsuario}`, formData);
+  }
+
+  getImagenesDocUsuario(idUsuario: number): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}/imagenesDoc?id_usuario=${idUsuario}`);
+  }
+
+  eliminarImagenDoc(idImagen: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/imagenDoc?id_imagen=${idImagen}`);
+  }
+
 }
