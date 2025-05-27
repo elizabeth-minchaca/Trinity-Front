@@ -131,7 +131,6 @@ export class DetallePropiedadComponent implements OnInit {
       this.isModalVisible = false;
     }
   }
-
   updatePropiedad(id: number) {}
 
   estadoFilterFn = (filter: string[], item: any): boolean => {
@@ -185,7 +184,7 @@ export class DetallePropiedadComponent implements OnInit {
     this.propiedadesService.get_propiedad_id(id).subscribe((data) => {
       this.propiedad = data;
       this._getReservas(this.propiedad.id);
-      this._cargarImagenes(this.propiedad.imagenes);
+      this._cargarImagenes(this.propiedad.id_imagenes);
       if (this.propiedad.id_encargado) {
         this._getEmpleado(this.propiedad.id_encargado);
       }
@@ -201,7 +200,7 @@ export class DetallePropiedadComponent implements OnInit {
     console.log(this.encargado);
   }
 
-  private _cargarImagenes(imagenObjs: { id: number }[]): void {
+  private _cargarImagenes(imagenObjs: [number]): void {
     if (!imagenObjs?.length) {
       this.imagenesConId = [];
       this.imagenes = [];
@@ -211,8 +210,8 @@ export class DetallePropiedadComponent implements OnInit {
     }
 
     this.imagenesConId = imagenObjs.map((img) => ({
-      id: img.id,
-      url: `${this.apiUrl}/imagen/${img.id}`,
+      id: img,
+      url: `${this.apiUrl}/imagen/${img}`,
     }));
 
     this.totalPaginas = Math.ceil(
@@ -236,6 +235,13 @@ export class DetallePropiedadComponent implements OnInit {
   }
 
   eliminarImagen(imagenUrl: string) {
+    if(this.propiedad.id_imagenes.length === 1) {
+      this.utilsService.showMessage({
+        title: 'No se puede eliminar',
+        message: 'La propiedad debe tener al menos una imagen.',
+        icon: 'warning',
+      });
+    }else{
     const imagen = this.imagenesConId.find((img) => img.url === imagenUrl);
     if (!imagen) return;
 
@@ -278,7 +284,7 @@ export class DetallePropiedadComponent implements OnInit {
           },
         });
       },
-    });
+    });}
   }
 
   private _getReservas(id: number) {

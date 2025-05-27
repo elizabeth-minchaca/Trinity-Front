@@ -24,8 +24,9 @@ export class Propiedad {
   is_habilitada: boolean;
   requiere_documentacion: boolean;
   id_encargado: number;
-  imagenes: Array<any>;
+  id_imagenes: [number];
   delete_at: Date | null;
+  fotoPerfil: any;
 
   constructor(obj?: any) {
     this.id = obj && obj.id || null;
@@ -53,8 +54,9 @@ export class Propiedad {
     this.requiere_documentacion = obj && obj.requiere_documentacion || false;
     this.id_encargado = obj && obj.id_encargado || null;
     this.pol_reserva = obj && obj.pol_reserva || null;
-    this.imagenes = obj && obj.imagenes || [];
+    this.id_imagenes = obj && obj.id_imagenes || [];
     this.delete_at = obj && obj.delete_at || null;
+    this.fotoPerfil = obj && obj.fotoPerfil || null;
   }	
 
 }
